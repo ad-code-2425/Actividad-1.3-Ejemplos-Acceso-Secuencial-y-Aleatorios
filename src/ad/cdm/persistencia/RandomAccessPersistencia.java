@@ -5,15 +5,30 @@
 package ad.cdm.persistencia;
 
 import ad.cdm.model.Persona;
+
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.util.logging.Level;
+import java.util.logging.LogManager;
+import java.util.logging.Logger;
 
 /**
  *
  * @author mfernandez
  */
 public class RandomAccessPersistencia implements IPersistencia {
+    static Logger logger = Logger.getLogger(RandomAccessPersistencia.class.getName());
+
+    public RandomAccessPersistencia() {
+        super();
+        try {
+            LogManager.getLogManager().readConfiguration(new FileInputStream("mylogging.properties"));
+        } catch (SecurityException | IOException e1) {
+            e1.printStackTrace();
+        }
+    }
 
     @Override
     public void escribirPersona(Persona persona, String ruta) {
@@ -37,11 +52,16 @@ public class RandomAccessPersistencia implements IPersistencia {
             raf.writeFloat(persona.getSalario());
 
         } catch (FileNotFoundException ex) {
-            ex.printStackTrace();
-            System.out.println("Se ha producido una excepción: " + ex.getMessage());
+            logger.log(Level.SEVERE, "Ha ocurrido una excepción escribiendo persona relacionada con el fichero " + ruta,
+                    ex);
+
         } catch (IOException ex) {
-            ex.printStackTrace();
-            System.out.println("Se ha producido una excepción: " + ex.getMessage());
+            logger.log(Level.SEVERE, "Ha ocurrido una excepción escribiendo persona " + persona +
+                    "relacionada  con I/O ", ex);
+
+        } catch (Exception ex) {
+            logger.log(Level.SEVERE, "Ha ocurrido una excepción escribiendo persona en " + ruta, ex);
+
         }
     }
 
@@ -69,9 +89,9 @@ public class RandomAccessPersistencia implements IPersistencia {
 
             persona = new Persona(id, dni, edad, salario);
 
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            System.out.println("Se ha producido una excepción: " + ex.getMessage());
+        } catch (Exception ex) {
+            logger.log(Level.SEVERE, "Ha ocurrido una excepción leyendo persona de ruta " + ruta, ex);
+
         }
         return persona;
 

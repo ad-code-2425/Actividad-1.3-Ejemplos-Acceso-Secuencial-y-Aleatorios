@@ -1,11 +1,13 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
- */
+
 package ad.cdm;
 
 import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;   
+import java.util.logging.Level;
+import java.util.logging.LogManager;
+import java.util.logging.Logger;
 
 import ad.cdm.model.Persona;
 import ad.cdm.persistencia.DataIOPersistencia;
@@ -18,13 +20,22 @@ import ad.cdm.persistencia.RandomAccessPersistencia;
  */
 public class Main {
 
-    private static String OUTPUT_FILE = "personaRandom.dat";
+    private static String OUTPUT_FILE = "";
+
+    static Logger logger = Logger.getLogger(Main.class.getName());
 
     /**
      * @param args the command line arguments
      */
 
     public static void main(String[] args) {
+        String numeroString = "";
+
+        try {
+            LogManager.getLogManager().readConfiguration(new FileInputStream("mylogging.properties"));
+        } catch (SecurityException | IOException e1) {
+            e1.printStackTrace();
+        }
 
         try {
 
@@ -37,7 +48,7 @@ public class Main {
                     new InputStreamReader(System.in));
 
             // Reading data using readLine
-            String numeroString = reader.readLine();
+            numeroString = reader.readLine();
 
             int numero = Integer.valueOf(numeroString);
 
@@ -48,7 +59,14 @@ public class Main {
 
             Persona personaRecuperada = persistencia.leerPersona(OUTPUT_FILE);
             System.out.println("Se ha recuperado: " + personaRecuperada);
-        } catch (Exception ex) {
+
+        } catch (NumberFormatException ex) {
+            logger.log(Level.INFO, "No se ha podido convertir a un número: " + numeroString, ex);
+        } catch (IOException ioex) {
+            logger.log(Level.SEVERE, "Ha ocurrido una excepción I/O:", ioex);
+
+        } catch (Exception gex) {
+            logger.log(Level.SEVERE, "Ha ocurrido una excepción", gex);
 
         }
 
@@ -68,7 +86,7 @@ public class Main {
                 break;
 
             default:
-                throw new UnsupportedOperationException("No se reconoce el tipo de persisencia");
+                throw new UnsupportedOperationException("No se reconoce el tipo de persistencia");
 
         }
         return persistencia;
