@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package ad.cdm.persistencia;
 
 import ad.cdm.model.Persona;
@@ -42,7 +39,7 @@ public class RandomAccessPersistencia implements IPersistencia {
             // Establecemos la longitud del StringBuilder en número de caracteres para que
             // se rellene de caracteres null si la cadena fuese más pequeña que el espacio
             // reservado para este campo
-            sb.setLength(9);
+            sb.setLength(Persona.DNI_LENGTH);
             // Aquí hay que usar writeChars porque writeUTF puede traducir cada carácter a
             // 1, 2 o 3 bytes y
             // en RandomAccessFile se necesitan registros de longitud fija.
@@ -78,7 +75,7 @@ public class RandomAccessPersistencia implements IPersistencia {
                 RandomAccessFile raf = new RandomAccessFile(ruta, "r");) {
 
             id = raf.readLong();
-            for (int i = 0; i <= 8; i++) {
+            for (int i = 0; i <= Persona.DNI_LENGTH-1; i++) {
                 sb.append(raf.readChar());
             }
 

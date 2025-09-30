@@ -1,11 +1,5 @@
-sep 24, 2024 7:05:39 PM ad.cdm.Main main
-GRAVE: Ha ocurrido una excepción
-java.lang.UnsupportedOperationException: No se reconoce el tipo de persisencia
-	at ad.cdm.Main.crearPersistencia(Main.java:91)
-	at ad.cdm.Main.main(Main.java:59)
-
-sep 24, 2024 7:55:01 PM ad.cdm.Main main
-GRAVE: Ha ocurrido una excepción
+sept 30, 2025 5:06:40 P.Â M. ad.cdm.Main main
+SEVERE: Ha ocurrido una excepciÃ³n
 java.lang.UnsupportedOperationException: No se reconoce el tipo de persistencia
 	at ad.cdm.Main.crearPersistencia(Main.java:89)
 	at ad.cdm.Main.main(Main.java:57)

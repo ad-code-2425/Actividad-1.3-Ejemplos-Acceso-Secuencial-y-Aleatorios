@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package ad.cdm.persistencia;
 
 
@@ -25,7 +22,7 @@ public class DataIOPersistencia implements IPersistencia {
     static Logger logger = Logger.getLogger(DataIOPersistencia.class.getName());
 
     public DataIOPersistencia() {
-        super();
+    
          try {
             LogManager.getLogManager().readConfiguration(new FileInputStream("mylogging.properties"));
         } catch (SecurityException | IOException e1) {
@@ -83,7 +80,7 @@ public class DataIOPersistencia implements IPersistencia {
             id = dis.readLong();
             // Para leer los datos escritos con writeChars, necesitamos saber la longitud
             // escrita
-            for (int i = 0; i < 9; i++) {
+            for (int i = 0; i < Persona.DNI_LENGTH; i++) {
                 caracter = dis.readChar();
                 sb.append(caracter);
             }

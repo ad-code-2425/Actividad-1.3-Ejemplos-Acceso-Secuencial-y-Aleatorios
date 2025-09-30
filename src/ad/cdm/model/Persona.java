@@ -9,6 +9,9 @@ package ad.cdm.model;
  * @author mfernandez
  */
 public class Persona {
+
+    public static final int DNI_LENGTH = 9;
+
     private long id;
     private String dni;
     private int edad;
